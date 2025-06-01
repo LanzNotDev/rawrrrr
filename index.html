@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lanz Official</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Best+of+Class&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background-color: #cccccc;
+    }
+    header {
+      background: #222831;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-family: 'Chakra Petch', sans-serif;
+      color: white;
+      margin: 0;
+    }
+    #accountName {
+      color: #00e676;
+      font-size: 1rem;
+      margin-top: 6px;
+      border: 1px solid black;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      background: white;
+      font-weight: 600;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 16px;
+      font-weight: bold;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 16px;
+      color: #333;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+    .notice {
+      background: #00c853;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .container {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .product-card {
+      background: #eeeeee;
+      border: 3px solid;
+      border-image: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet) 1;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+      display: none;
+    }
+    .product-info {
+      padding: 10px;
+      text-align: center;
+    }
+    .product-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .product-price {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    .btn-buy {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Best of Class', cursive;
+      background-size: 400% 400%;
+      animation: rainbow 4s ease infinite;
+    }
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .register-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .register-section button {
+      margin: 10px 6px;
+      padding: 12px 20px;
+      background: #f4a261;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .modal, .register-modal, .payment-modal, .name-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal-content, .register-modal-content, .payment-modal-content, .name-modal-content {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    .modal-content button, .register-modal-content button, .payment-modal-content button, .name-modal-content button {
+      margin: 10px 6px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbow 4s ease infinite;
+    }
+    .success-message {
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    #waInput.success {
+      border: 2px solid green;
+    }
+    .feedback {
+      text-align: center;
+      margin: 30px;
+      font-size: 1rem;
+    }
+    .feedback p {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Lanzz Official</h1>
+      <div id="accountName"></div>
+    </div>
+    <nav>
+      <a href="#produk">Produk</a>
+      <a onclick="openRegisterModal()">Daftar Akun</a>
+    </nav>
+  </header>  <div class="notice" id="accountNotice" style="display: none;">Akun Anda Terdaftar!</div>  <div class="section-title" id="produk">Produk Utama</div>
+  <section class="container" id="product-list"></section>  <div class="section-title">Produk Lainnya</div>
+  <section class="container" id="other-products"></section>  <section id="register" class="register-section">
+    <button id="daftarButton" onclick="openRegisterModal()">Daftar Sekarang via WhatsApp</button>
+  </section>  <div class="modal" id="modalBox">
+    <div class="modal-content">
+      <p><strong>Halo kami dari layanan vercel</strong> memverifikasi bahwa layanan ini 100% aman dan ini dikelola dengan baik.<br>— cyberteam vercel</p>
+      <p>Setelah Membaca Apakah Anda Siap Untuk DiAlihkan Menuju WhatsApp?<br><strong>Information:</strong> Kolom Teks akan terisi otomatis sesuai metode pembayaran yang anda pilih Maka Mohon Untuk TIDAK DI HAPUS</p>
+      <button onclick="openPaymentModal()">Iya > Lanjutkan Transaksi</button>
+      <button onclick="closeModal()">Batal > Kembali Ke Beranda</button>
+    </div>
+  </div>  <div class="payment-modal" id="paymentModal">
+    <div class="payment-modal-content">
+      <p>Pilih Metode Pembayaran:</p>
+      <button onclick="goPay('.dana')">Bayar Metode DANA</button>
+      <button onclick="goPay('.payment')">Bayar Metode QRIS</button>
+      <button onclick="closePaymentModal()">Kembali</button>
+    </div>
+  </div>  <div class="register-modal" id="registerModal">
+    <div class="register-modal-content">
+      <p><strong>Halo Untuk Memudahkan Layanan Anda.</strong><br>Apakah Anda Siap Untuk Mendaftar Melalui Nomor WhatsApp?<br>Platform Ini Aman Diawasi Vercel Official</p>
+      <input type="text" id="waInput" placeholder="Contoh: 6212345678">
+      <br>
+      <button onclick="submitRegister()">Lanjut Mendaftar</button>
+      <button onclick="closeRegisterModal()">Batal Mendaftar</button>
+      <div id="registerMessage" class="success-message" style="display:none;">Anda Berhasil Mendaftar</div>
+    </div>
+  </div>  <div class="name-modal" id="nameModal">
+    <div class="name-modal-content">
+      <p>Hey Anda Berhasil Daftar</p>
+      <p>Masukan Nama:</p>
+      <input type="text" id="nameInput" placeholder="Nama Anda">
+      <br>
+      <button onclick="returnToHome()">Lanjutkan</button>
+    </div>
+  </div>  <div class="feedback">
+    <p><strong>Halo Apakah Anda Puas dengan Layanan Kami?</strong></p>
+    <p>Jika Ada Bug Atau Kendala Mohon Hubungi:</p>
+    <p><strong>6283852426553 Service Center</strong></p>
+  </div>  <script>
+    const produkUtama = [
+      'Reseller Panel Permanen|Rp3.000',
+      'Admin Panel|Rp5.000',
+      'PT Panel|Rp8.000',
+      'Owner Panel|Rp13.000',
+      'Tangan Kanan Panel|Rp20.000',
+      'Dev Panel|Rp28.000'
+    ];
+    const produkLainnya = [
+      'Jasa Create SC|Rp5.000',
+      'Panel Pterodactyl Unlimited Ram|Rp5.000',
+      'Script Cpanel 100 srv x Bug Menu|Rp30.000'
+    ];
+
+    function renderProducts(list, containerId) {
+      const container = document.getElementById(containerId);
+      list.forEach(item => {
+        const [name, price] = item.split('|');
+        container.innerHTML += `
+          <div class="product-card">
+            <div class="product-info">
+              <div class="product-title">${name}</div>
+              <div class="product-price">${price}</div>
+              <button class="btn-buy" onclick="openModal()">Order Now</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function openModal() {
+      document.getElementById("modalBox").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modalBox").style.display = "none";
+    }
+
+    function openPaymentModal() {
+      closeModal();
+      document.getElementById("paymentModal").style.display = "flex";
+    }
+
+    function closePaymentModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+
+    function goPay(cmd) {
+      window.location.href = "https://wa.me/6283852426553?text=" + encodeURIComponent(cmd);
+    }
+
+    function openRegisterModal() {
+      document.getElementById("registerModal").style.display = "flex";
+    }
+
+    function closeRegisterModal() {
+      document.getElementById("registerModal").style.display = "none";
+    }
+
+    function submitRegister() {
+      const input = document.getElementById("waInput");
+      if (input.value.trim() !== "") {
+        input.classList.add("success");
+        document.getElementById("registerMessage").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("registerModal").style.display = "none";
+          document.getElementById("nameModal").style.display = "flex";
+        }, 1000);
+      }
+    }
+
+    function returnToHome() {
+      const name = document.getElementById("nameInput").value;
+      document.getElementById("nameModal").style.display = "none";
+      document.getElementById("accountNotice").style.display = "block";
+      if(name.trim()) {
+        document.getElementById("accountName").innerText = `Halo, ${name}!`;
+        document.getElementById("daftarButton").style.display = "none";
+        document.querySelector("nav a[onclick]").style.display = "none";
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    renderProducts(produkUtama, "product-list");
+    renderProducts(produkLainnya, "other-products");
+  </script></body>
+</html>
