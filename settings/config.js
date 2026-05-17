@@ -18,10 +18,10 @@ global.versi = version
 global.version = '6.0.0'
 global.baileys = '@whiskeysockets/baileys'
 global.namaOwner = "ʟᴀɴᴢᴇxᴇ​᭄"
-global.packname = 'Lanzx V6'
-global.botname = 'Lanzx V6'
-global.botname2 = 'Lanzx V6'
-global.author = 'Putzzslebew'
+global.packname = 'Mikasa MD V7'
+global.botname = 'Mikasa MD V7'
+global.botname2 = 'Mikasa MD V7'
+global.author = 'LanzChuyy'
 global.reqpair = 'XXXXXXXX' // HARUS 8 HURUF
 //~~~~~~~~~~~ Settings Link ~~~~~~~~~~//
 global.linkOwner = "https://wa.me/6283852426553"
