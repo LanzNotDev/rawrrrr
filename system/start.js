@@ -19,13 +19,8 @@ const { say } = require('cfonts')
 const { Boom } = require('@hapi/boom');
 const config = () => require('../settings/config');
 const { default: WAConnection, generateWAMessageFromContent, 
-prepareWAMessageMedia, useMultiFileAuthState, Browsers, DisconnectReason, makeInMemoryStore, makeCacheableSignalKeyStore, fetchLatestWaWebVersion, proto, PHONENUMBER_MCC, getAggregateVotesInPollMessage, generateForwardMessageContent, InteractiveMessage } = require('@whiskeysockets/baileys');
-global.bpsesi = true
-let sudahBackup = false
-let lastActivity = Date.now()
+prepareWAMessageMedia, useMultiFileAuthState, Browsers, fetchLatestBaileysVersion, DisconnectReason, makeInMemoryStore, makeCacheableSignalKeyStore, fetchLatestWaWebVersion, proto, PHONENUMBER_MCC, getAggregateVotesInPollMessage, generateForwardMessageContent, InteractiveMessage } = require('@whiskeysockets/baileys');
 
-const SESSION_PATH = "./library/Putzsession"
-const BACKUP_PATH = "./library/backup_session"
 
 let usePairingCode;
 //const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -386,6 +381,7 @@ async function startingBot() {
 //async function connectToWhatsApp() {
 const store = await makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
     const { state, saveCreds } = await useMultiFileAuthState("./library/Putzsession");
+    const { version, isLatest } = await fetchLatestBaileysVersion();
     const Putzz = WAConnection({
         printQRInTerminal: false,
         syncFullHistory: true,
@@ -416,7 +412,7 @@ const store = await makeInMemoryStore({ logger: pino().child({ level: 'silent', 
 
             return message;
         },
-        version: (await (await fetch('https://raw.githubusercontent.com/WhiskeySockets/Baileys/master/src/Defaults/baileys-version.json')).json()).version,
+        version, 
         browser: ["Ubuntu", "Chrome", "20.0.04"],
         logger: pino({
             level: 'silent' // Set 'fatal' for production
@@ -472,7 +468,8 @@ konek({ Putzz, update, startingBot, DisconnectReason, Boom, exec })
                 startingBot();
             }
         } else if (connection === 'open') {
-        Putzz.newsletterFollow("120363404782325678@newsletter") //Lanz
+        
+//        Putzz.newsletterFollow("120363404782325678@newsletter") //Lanz
 //        client.newsletterFollow("120363421047876942@newsletter") //vina
 //        client.newsletterFollow("120363425908603083@newsletter") //chey
 //        client.newsletterFollow("120363426950591416@newsletter") //fanfcyk

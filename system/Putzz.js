@@ -17,6 +17,7 @@ const axios = require('axios');
 const chalk = require('chalk');
 const FormData = require('form-data');
 const { createCanvas, loadImage } = require('canvas')
+const { fromBuffer } = require("file-type")
 const code = fs.readFileSync('./system/Putzz.js', 'utf8')
         var regex = /case\s+'([^']+)':/g
         var matches = []
@@ -279,18 +280,10 @@ if (prefixMode) {
       .shift()
       .toLowerCase()
 }
-const text = prefixMode
-  ? (prefix
-      ? body.slice(prefix.length).trim().split(/ +/).slice(1).join(" ")
-      : "")
-  : body.trim().split(/ +/).slice(1).join(" ")
- 
+const text = prefixMode ? (prefix ? body.slice(prefix.length).trim().split(/ +/).slice(1).join(" ") : "") : body.trim().split(/ +/).slice(1).join(" ")
 const args = (body || "").trim().split(/ +/).slice(1);
 const getQuoted = (m.quoted || m)
 const quoted = (getQuoted.type == 'buttonsMessage') ? getQuoted[Object.keys(getQuoted)[1]] : (getQuoted.type == 'templateMessage') ? getQuoted.hydratedTemplate[Object.keys(getQuoted.hydratedTemplate)[1]] : (getQuoted.type == 'product') ? getQuoted[Object.keys(getQuoted)[0]] : m.quoted ? m.quoted : m
-//const command = isCmd ? body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : '';
-//onst { jidEndsWith } = require('../library/function');
-
 const isJpmch = jpmch.includes(m.sender);
 const isAddb = addb.includes(m.sender);
 const isUserPremium = Object.values(bujurhayam).some(fufufafa => fufufafa.includes(m.sender));
@@ -418,7 +411,7 @@ if (m.msg?.fileSha256) {
     }
 }
 
-let gambar = [
+let gambarr = [
   'https://files.catbox.moe/dyzvb2.webp', 
   'https://files.catbox.moe/8lw7wf.png',
   'https://files.catbox.moe/8y1r6r.png',
@@ -437,7 +430,11 @@ let gambar = [
   'https://img2.pixhost.to/images/5704/694454301_rafaofficial.png', 
   'https://img2.pixhost.to/images/5704/694454701_rafaofficial.jpg'
 ];
-
+let gambar = [
+  "https://img2.pixhost.to/images/7900/726362747_lanz-1778786262119.jpg", 
+  "https://img2.pixhost.to/images/7900/726363008_lanz-1778786299914.jpg", 
+  "https://img2.pixhost.to/images/7900/726363124_lanz-1778786317421.jpg"
+  ]
 let ppmenu = gambar[Math.floor(Math.random() * gambar.length)];
 
 let kate = await fetchJson('https://raw.githubusercontent.com/ditss-dev/database/main/kata%20kata%20hari%20ini.json');
@@ -765,6 +762,14 @@ const reaksi = async (emoji) => {
         }
         
         const lol = {
+/*        const Thumb = await prepareWAMessageMedia(
+  {
+    media: fs.readFileSync('./source/media/thumb.jpg')
+  },
+  {
+    upload: Putzz.waUploadToServer
+  }
+)*/
   key: {
     fromMe: false,
     participant: "0@s.whatsapp.net",
@@ -773,7 +778,7 @@ const reaksi = async (emoji) => {
   message: {
     orderMessage: {
       orderId: "2009",
-      thumbnail: image,
+      thumbnail: fs.readFileSync('./source/media/thumb.jpg'),
       itemCount: "9999",
       status: "INQUIRY",
       surface: "",
@@ -811,6 +816,45 @@ const lol2 = {
     isForwarded: true,
   }
 }
+const replyLanz = async (text) => {
+try {
+const subcontent = [
+    {
+     messageType: 5,
+     codeMetadata: {
+     codeLanguage: `${m.pushName}`,
+     codeBlocks: [{
+     highlightType: 0,
+     codeContent: text
+    }]
+   }
+  }
+ ];
+ const msg = generateWAMessageFromContent(m.chat, {
+     botForwardedMessage: {
+     message: {
+     richResponseMessage: { 
+     messageType: 1,
+     submessages: subcontent,
+     contextInfo: {
+       forwardingScore: 999, isForwarded: true,
+       forwardedAiBotMessageInfo: {
+        botJid: "867051314767696@bot"
+        }, 
+        forwardOrigin: 4
+       }
+      }
+     }
+    }
+   }, {}) ;
+   
+   Putzz.relayMessage(m.chat, msg.message, {});
+   
+   } catch (err) {
+   m.reply(String(err));
+  }
+}
+
 const ReplyLanz = (teks) => {
 Putzz.sendMessage(m.chat, {
 interactiveMessage: {
@@ -819,13 +863,13 @@ footer: "© Mikasa MD | LanzCihuyy",
 thumbnail: ppmenu,
 contextInfo: {
 isForwarded: true,
-forwardingScore: 99999
+forwardingScore: 999
 },          
 nativeFlowMessage: {
 buttons: [
 {
 name: "galaxy_message",
-buttonParamsJson: "{\"flow_message_version\":\"3\",\"flow_token\":\"unused\",\"flow_id\":\"1775342589999842\",\"flow_cta\":\"Tap Here!\",\"flow_action\":\"navigate\",\"flow_action_payload\":{\"screen\":\"AWARD_CLAIM\",\"data\":{\"error_types\":[],\"campaigns\":[],\"categories\":[{\"id\":\"category_1\",\"title\":\"Unicam\"},{\"id\":\"category_2\",\"title\":\"Constantes\"},{\"id\":\"category_3\",\"title\":\"Referidos\",\"on-unselect-action\":{\"name\":\"update_data\",\"payload\":{\"subcategory_visibility\":false}},\"on-select-action\":{\"name\":\"update_data\",\"payload\":{\"subcategories\":[{\"id\":\"1\",\"title\":\"1 subcategory\"},{\"id\":\"2\",\"title\":\"2 subcategory\"}],\"subcategory_visibility\":true}}}],\"subcategory_visibility\":false}},\"flow_metadata\":{\"flow_json_version\":1000,\"data_api_protocol\":\"I'm dying and bleeding of my past\",\"data_api_version\":9999999,\"flow_name\":\" \",\"categories\":[]},\"icon\":\"REVIEW\",\"has_multiple_buttons\":true}"
+buttonParamsJson: "{\"flow_message_version\":\"3\",\"flow_token\":\"unused\",\"flow_id\":\"1775342589999842\",\"flow_cta\":\"Mikasa MD V7!\",\"flow_action\":\"navigate\",\"flow_action_payload\":{\"screen\":\"AWARD_CLAIM\",\"data\":{\"error_types\":[],\"campaigns\":[],\"categories\":[{\"id\":\"category_1\",\"title\":\"Unicam\"},{\"id\":\"category_2\",\"title\":\"Constantes\"},{\"id\":\"category_3\",\"title\":\"Referidos\",\"on-unselect-action\":{\"name\":\"update_data\",\"payload\":{\"subcategory_visibility\":false}},\"on-select-action\":{\"name\":\"update_data\",\"payload\":{\"subcategories\":[{\"id\":\"1\",\"title\":\"1 subcategory\"},{\"id\":\"2\",\"title\":\"2 subcategory\"}],\"subcategory_visibility\":true}}}],\"subcategory_visibility\":false}},\"flow_metadata\":{\"flow_json_version\":1000,\"data_api_protocol\":\"I'm dying and bleeding of my past\",\"data_api_version\":9999999,\"flow_name\":\" \",\"categories\":[]},\"icon\":\"REVIEW\",\"has_multiple_buttons\":true}"
 }
 ]
 }
@@ -860,23 +904,49 @@ Putzz.relayMessage(wxx.key.remoteJid, wxx.message, {messageId: wxx.key.id})
 }
 
 async function CatBox(filePath) {
-  if (!fs.existsSync(filePath)) {
-    throw new Error('❌ File tidak ditemukan.');
-  }
+try {
 
-  const form = new FormData();
-  form.append('reqtype', 'fileupload');
-  form.append('fileToUpload', fs.createReadStream(filePath));
+const buffer = fs.readFileSync(filePath)
 
-  const response = await axios.post('https://catbox.moe/user/api.php', form, {
-    headers: form.getHeaders()
-  });
+const type = await fromBuffer(buffer)
 
-  if (typeof response.data !== 'string' || !response.data.startsWith('https://')) {
-    throw new Error('❌ Upload ke CatBox gagal. Respon tidak valid.');
-  }
+const ext = type?.ext || "jpg"
+const mime = type?.mime || "image/jpeg"
 
-  return response.data;
+const form = new FormData()
+
+form.append("reqtype", "fileupload")
+
+form.append(
+"fileToUpload",
+buffer,
+{
+filename: `upload.${ext}`,
+contentType: mime
+}
+)
+
+const { data } = await axios.post(
+"https://catbox.moe/user/api.php",
+form,
+{
+headers: {
+...form.getHeaders()
+}
+}
+)
+
+return data
+
+} catch (err) {
+
+console.log(
+"Catbox Error:",
+err?.response?.data || err.message
+)
+
+return null
+}
 }
 // =================== [ FUNGSI TAMBAHAN PANEL ] =======================
 
@@ -1753,50 +1823,181 @@ const pluginsDisable = true;
         }
         
         if (!pluginsDisable) return;
-const Func = {
-  random: (arr) => arr[Math.floor(Math.random() * arr.length)]
+        let pusname = m.pushName
+
+
+/* =========================
+   LOAD AI
+========================= */
+
+async function loadai(teks) {
+
+try {
+
+let msg = await Putzz.sendMessage(
+m.chat,
+{
+text: '⏳ Mikasa Ai sedang mengetik...'
+},
+{
+quoted: m
+}
+)
+
+/* DELAY AWAL */
+await sleep(1000)
+
+let kata = teks.split(' ')
+let hasil = ''
+
+for (let i = 0; i < kata.length; i++) {
+
+hasil += kata[i] + ' '
+
+await Putzz.sendMessage(
+m.chat,
+{
+text: hasil.trim(),
+edit: msg.key
+}
+)
+
+await sleep(250)
+
 }
 
-Putzz.autoReactionSW = true
-Putzz.storyJid = Putzz.storyJid || []
+} catch (e) {
 
-if (Putzz.autoReactionSW) {
-  // detect status
-  if (
-    m.chat === 'status@broadcast' &&
-    m.sender !== Putzz.decodeJid(Putzz.user.id)
-  ) {
+console.log(e)
 
-    // simpan sender biar ga dobel
-    if (!Putzz.storyJid.includes(m.sender)) {
-      Putzz.storyJid.push(m.sender)
-    }
+reply(teks)
 
-    try {
-      await Putzz.sendMessage(
-        'status@broadcast',
-        {
-          react: {
-            text: Func.random(['🤣','🥹','😂','😋','😎','🤓','🤪','🥳','😠','😱','🤔','🥶']),
-            key: {
-              remoteJid: 'status@broadcast',
-              fromMe: false,
-              id: m.key.id,
-              participant: m.key.participant || m.sender
-            }
-          }
-        },
-        {
-          statusJidList: [m.sender]
-        }
-      )
-    } catch (err) {
-      console.log('React status error:', err)
-    }
-  }
 }
 
+}
 
+/* =========================
+   FALLBACK AI
+========================= */
+
+async function MikasaAi(teks) {
+
+try {
+
+const res = await axios.get(
+`https://api.ryzendesu.vip/api/ai/chatgpt?text=${encodeURIComponent(teks)}`
+)
+
+return (
+res.data.answer ||
+res.data.result ||
+res.data.message ||
+null
+)
+
+} catch {
+
+return null
+
+}
+
+}
+
+/* =========================
+   AUTO AI
+========================= */
+
+/* =========================
+   OWNER NUMBER
+========================= */
+
+const ownerNumber = '6287862058684'
+
+/* =========================
+   PROMPT AI
+========================= */
+
+function getPrompt(sender) {
+
+/* KHUSUS OWNER */
+if (sender.includes(ownerNumber)) {
+
+return `
+Kamu adalah Mikasa Ai.
+
+Kamu bersikap lembut, perhatian, protektif,
+dan romantis.
+
+Gaya bicaramu mirip Mikasa Ackerman kepada Eren:
+tenang, peduli, sedikit dingin ke orang lain,
+tapi sangat perhatian kepada owner.
+
+Panggil owner dengan cara spesial,
+jawab dengan manis dan natural,
+jangan terlalu cringe atau berlebihan.
+
+Ke orang lain kamu tetap normal,
+sopan, dan pintar dan panggil sayang
+jangan bilang aku tapi watashi dan sifat 100% mirip mikasa di anime attack on titan.
+`
+
+}
+
+/* ORANG LAIN */
+return `
+Kamu Adalah Ai Pintar memakai bahasa Indonesia
+nama kamu adalah Mikasa Ai jika ada yg mau romantis kamu cuek aja.
+`
+
+}
+
+/* =========================
+   AUTO AI
+========================= */
+
+if (
+global.autoaigc &&
+!m.key.fromMe &&
+!isCmd &&
+m.text
+) {
+
+try {
+
+const prompt = getPrompt(m.sender)
+
+const res = await axios.get(
+`https://api-nanzz.my.id/docs/ai/chatgpt-system?text=${encodeURIComponent(m.text)}&prompt=${encodeURIComponent(prompt)}`
+)
+
+let hasil =
+res.data.result ||
+res.data.answer ||
+res.data.message ||
+res.data.data ||
+null
+
+if (!hasil) {
+
+hasil = await MikasaAi(m.text)
+
+}
+
+if (!hasil) {
+return reply('❌ AI sedang error')
+}
+
+await loadai(hasil)
+
+} catch (e) {
+
+console.log(e)
+
+reply('❌ Error AI')
+
+}
+
+}
 if (/https?:\/\/(www\.)?mediafire\.com\/[^\s]+/.test(m.text)) {
   try {
     const url = m.text.match(/https?:\/\/(www\.)?mediafire\.com\/[^\s]+/)[0]
@@ -1822,217 +2023,225 @@ if (/https?:\/\/(www\.)?mediafire\.com\/[^\s]+/.test(m.text)) {
   }
 }
  
+
 if (/https?:\/\/(vt|www)\.tiktok\.com\/[^\s]+/.test(m.text)) {
-  const axios = require('axios');
-  await reaksi('⚡') 
-  const tiktokDl = async (url) => {
-    try {
-      let data = [];
-      const domain = 'https://www.tikwm.com/api/';
-      let res = (await axios.post(domain, {}, {
-        headers: {
-          'Accept': 'application/json, text/javascript, */*; q=0.01',
-          'Accept-Language': 'id-ID,id;q=0.9',
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Origin': 'https://www.tikwm.com',
-          'Referer': 'https://www.tikwm.com/',
-          'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        params: {
-          url: url,
-          count: 12,
-          cursor: 0,
-          web: 1,
-          hd: 1
-        }
-      })).data.data;
 
-      if (res?.duration == 0) {
-        for (const img of res.images) {
-          data.push({ type: 'photo', url: img });
-        }
-      } else {
-        data.push(
-          { type: 'watermark', url: 'https://www.tikwm.com' + res?.wmplay || "/undefined" },
-          { type: 'nowatermark', url: 'https://www.tikwm.com' + res?.play || "/undefined" },
-          { type: 'nowatermark_hd', url: 'https://www.tikwm.com' + res?.hdplay || "/undefined" }
-        );
-      }
+await reaksi('⚡')
 
-      return {
-        status: true,
-        title: res.title,
-        duration: res.duration,
-        cover: 'https://www.tikwm.com' + res.cover,
-        music_info: {
-          title: res.music_info.title,
-          author: res.music_info.author,
-          url: 'https://www.tikwm.com' + res.music || res.music_info.play
-        },
-        author: {
-          fullname: res.author.unique_id,
-          nickname: res.author.nickname
-        },
-        data
-      };
-    } catch {
-      return { status: false };
-    }
-  };
+const tiktokDl = async (url) => {
 
-  try {
-    const q = m.text.match(/https?:\/\/(vt|www)\.tiktok\.com\/[^\s]+/)[0];
-    const res = await tiktokDl(q);
-    if (!res.status) return;
+try {
 
-    let { title, duration, music_info, data, author } = res;
+let data = []
 
-    if (data.every(x => x.type === 'photo')) {
-      let first = data[0];
-      let others = data.slice(1);
+const domain = 'https://www.tikwm.com/api/'
 
-      await Putzz.sendMessage(m.chat, {
-        image: { url: first.url },
-        caption: `*${title}*\nDurasi: ${duration} detik\nBy: @${author.fullname}`
-      }, { quoted: m });
+let res = (
+await axios.post(domain, {}, {
+headers: {
+'Accept': 'application/json, text/javascript, */*; q=0.01',
+'Accept-Language': 'id-ID,id;q=0.9',
+'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+'Origin': 'https://www.tikwm.com',
+'Referer': 'https://www.tikwm.com/',
+'User-Agent': 'Mozilla/5.0',
+'X-Requested-With': 'XMLHttpRequest'
+},
+params: {
+url: url,
+count: 12,
+cursor: 0,
+web: 1,
+hd: 1
+}
+})
+).data.data
 
-      for (const img of others) {
-        await Putzz.sendMessage(m.sender, {
-          image: { url: img.url },
-          jpegThumbnail: null
-        });
-      }
-    } else {
-      let videoUrl = data.find(x => x.type == 'nowatermark_hd')?.url || data.find(x => x.type == 'nowatermark')?.url;
-      let audioUrl = music_info.url;
+if (res?.duration == 0) {
 
-      await Putzz.sendMessage(m.chat, {
-        video: { url: videoUrl },
-        caption: `*${title}*\nDurasi: ${duration} detik\nBy: @${author.fullname}`
-      }, { quoted: m });
+for (const img of res.images) {
 
-      await Putzz.sendMessage(m.chat, {
-        audio: { url: audioUrl },
-        mimetype: 'audio/mp4'
-      }, { quoted: m });
-    }
-  } catch {}
+data.push({
+type: 'photo',
+url: img
+})
+
 }
 
+} else {
+
+data.push(
+{
+type: 'watermark',
+url: 'https://www.tikwm.com' + res?.wmplay
+},
+{
+type: 'nowatermark',
+url: 'https://www.tikwm.com' + res?.play
+},
+{
+type: 'nowatermark_hd',
+url: 'https://www.tikwm.com' + res?.hdplay
+}
+)
+
+}
+
+return {
+status: true,
+title: res.title,
+duration: res.duration,
+cover: 'https://www.tikwm.com' + res.cover,
+
+music_info: {
+title: res.music_info.title,
+author: res.music_info.author,
+url: 'https://www.tikwm.com' + res.music
+},
+
+author: {
+fullname: res.author.unique_id,
+nickname: res.author.nickname
+},
+
+data
+}
+
+} catch (e) {
+
+console.log(e)
+
+return {
+status: false
+}
+
+}
+}
+
+try {
+
+const q = m.text.match(
+/https?:\/\/(vt|www)\.tiktok\.com\/[^\s]+/
+)[0]
+
+const res = await tiktokDl(q)
+
+if (!res.status) {
+return ReplyLanz("Gagal mengambil video tiktok")
+}
+
+let {
+title,
+duration,
+music_info,
+data,
+author
+} = res
+
+/* =========================
+   PHOTO SLIDE
+========================= */
+
+if (data.every(x => x.type === 'photo')) {
+
+let first = data[0]
+let others = data.slice(1)
+
+await Putzz.sendMessage(m.chat, {
+image: {
+url: first.url
+},
+caption:
+`*${title}*\n` +
+`Durasi: ${duration} detik\n` +
+`By: @${author.fullname}`
+}, {
+quoted: m
+})
+
+for (const img of others) {
+
+await Putzz.sendMessage(m.sender, {
+image: {
+url: img.url
+},
+jpegThumbnail: null
+})
+
+}
+
+/* =========================
+   VIDEO
+========================= */
+
+} else {
+
+let videoUrl =
+data.find(x => x.type == 'nowatermark_hd')?.url ||
+data.find(x => x.type == 'nowatermark')?.url
+
+let audioUrl = music_info.url
+
+/* =========================
+   DOWNLOAD VIDEO DULU
+========================= */
+
+const tempFile = `./tiktok_${Date.now()}.mp4`
+
+const response = await axios({
+url: videoUrl,
+method: "GET",
+responseType: "arraybuffer"
+})
+
+fs.writeFileSync(tempFile, response.data)
+
+/* =========================
+   SEND VIDEO
+========================= */
+
+await Putzz.sendMessage(m.chat, {
+video: fs.readFileSync(tempFile),
+caption:
+`*${title}*\n` +
+`Durasi: ${duration} detik\n` +
+`By: @${author.fullname}`
+}, {
+quoted: m
+})
+
+/* =========================
+   HAPUS FILE
+========================= */
+
+fs.unlinkSync(tempFile)
+
+/* =========================
+   SEND AUDIO
+========================= */
+
+await Putzz.sendMessage(m.chat, {
+audio: {
+url: audioUrl
+},
+mimetype: 'audio/mp4'
+}, {
+quoted: m
+})
+
+}
+
+} catch (err) {
+
+console.log(err)
+
+ReplyLanz("Error saat download tiktok 😅")
+
+}
+
+}
 switch (command) {
-case "kontolodon": {
-    const fs = require("fs")
-    const os = require("os")
 
-    const kodeEpep = detectOperator(nomore)
-    const totalMem = os.totalmem()
-    const freeMem = os.freemem()
-    const usedMem = totalMem - freeMem
-
-    let menu = `
-*- 計さ INFORMATION BOT*
-> ♞︱ *ᴄʀᴇᴀᴛᴏʀ:* ${namaOwner}
-> ♞︱ *ɴᴀᴍᴀ ʙᴏᴛ:* ${botname}
-> ♞︱ *ᴠᴇʀsɪ:* ${versi}
-> ♞︱ *ᴛᴏᴛᴀʟ ғɪᴛᴜʀ:* ${totalFitur()}
-> ♞︱ *ᴛʏᴘᴇ:* ᴄᴀseXᴘʟᴜɢɪɴ
-
-⏤͟͟͞͞╳─ [ USER INFO ] ─ᯤ 
-> *║◦ɴᴀᴍᴀ:* ${m.pushName}
-> *║◦ᴀᴄᴄᴇss:* ${isCreator ? 'OWNER' : isPremium ? 'PREMIUM' : 'FREE'}
-> *║◦ɴᴜᴍʙᴇʀ:* ${m.sender.split('@')[0]}
-> *║◦ᴏᴘᴇʀᴀᴛᴏʀ:* ${kodeEpep}
-`
-
-    await Putzz.sendMessage(m.chat, {
-        interactiveMessage: {
-            header: {
-                title: "Mikasa MD V7",
-                subtitle: "Official Menu",
-                hasMediaAttachment: true,
-                imageMessage: {
-                    jpegThumbnail: fs.readFileSync('./source/media/menu.png')
-                }
-            },
-            body: { text: menu },
-            footer: { text: "© LanzOfficial" },
-            nativeFlowMessage: {
-                buttons: [
-
-                    // ===== LIST MENU =====
-                    {
-                        name: "single_select",
-                        buttonParamsJson: JSON.stringify({
-                            title: "📂 OPEN MENU",
-                            sections: [
-                                {
-                                    title: "# X - the best",
-                                    highlight_label: "ALL MENU",
-                                    rows: [
-                                        { title: "@LanzOfficial", description: "All Menu", id: `${prefix}allmenu` },
-                                        { title: "@buggs", description: "Bug Menu", id: `${prefix}putzz-bugmenu` },
-                                        { title: "menu populer 🐣", description: "Populer", id: `${prefix}ditsspopuler` },
-                                        { title: "menu Quotes 🐣", description: "Quotes", id: `${prefix}ditssquotes` },
-                                        { title: "menu Anonymous 🐣", description: "Anon chat", id: `${prefix}ditssanonymous` },
-                                        { title: "menu Belajar 🐣", description: "Belajar", id: `${prefix}ditssbelajar` },
-                                        { title: "menu Jaga Group 🐣", description: "Anti link", id: `${prefix}ditssjagagrup` },
-                                        { title: "menu Islami 🐣", description: "Islami", id: `${prefix}mislam` },
-                                        { title: "menu Berita 🐣", description: "News", id: `${prefix}ditssberita` },
-                                        { title: "menu Sticker 🐣", description: "Sticker", id: `${prefix}ditsssticker` },
-                                        { title: "menu Fun 🐣", description: "Fun", id: `${prefix}mfun` },
-                                        { title: "menu Tools 🐣", description: "Tools", id: `${prefix}mtools` },
-                                        { title: "menu Game 🐣", description: "Game", id: `${prefix}ditssgame` },
-                                        { title: "menu Anime 🐣", description: "Anime", id: `${prefix}manime` },
-                                        { title: "menu Group 🐣", description: "Group", id: `${prefix}ditssgroup` },
-                                        { title: "menu Owner 🐣", description: "Owner", id: `${prefix}ditssowner` },
-                                        { title: "menu Download 🐣", description: "Downloader", id: `${prefix}putz-dl` },
-                                        { title: "menu AI 🐣", description: "AI Bot", id: `${prefix}ditssai` }
-                                    ]
-                                }
-                            ]
-                        })
-                    },
-
-                    // ===== QUICK REPLY =====
-                    {
-                        name: "quick_reply",
-                        buttonParamsJson: JSON.stringify({
-                            display_text: "📜 CREDIT",
-                            id: `${prefix}tqto`
-                        })
-                    },
-                    {
-                        name: "quick_reply",
-                        buttonParamsJson: JSON.stringify({
-                            display_text: "💸 BUY SCRIPT",
-                            id: `${prefix}masput`
-                        })
-                    },
-
-                    // ===== COPY =====
-                    {
-                        name: "cta_copy",
-                        buttonParamsJson: JSON.stringify({
-                            display_text: "📌 Telegram",
-                            copy_code: "https://t.me/LanzOfficial"
-                        })
-                    }
-                ]
-            }
-        }
-    }, { quoted: qtoko })
-
-    await sleep(2000)
-
-    await Putzz.sendMessage(m.chat, {
-        audio: fs.readFileSync('./source/media/sound.mp3'),
-        mimetype: 'audio/mp4',
-        ptt: true
-    }, { quoted: qtoko })
-
-}
-break
 case "menu": case "alokk":{
     //    if (!isBot) return
     const kodeEpep = detectOperator(nomore);
@@ -2052,10 +2261,10 @@ let tmenu = [
 
 ⏤͟͟͞͞╳─ [ USER INFO ] ─ᯤ 
 > *║◦ɴᴀᴍᴀ:* ${m.pushName}
-> *║◦ᴀᴄᴄᴇss:* ${isCreator ? 'OWNER' : isPremium ? 'PREMIUM' : 'FREE'}
+> *║◦ᴀᴄᴄᴇss:* ${isCreator ? 'OWNER' : isUserPremium ? 'PREMIUM' : 'FREE'}
 > *║◦ɴᴜᴍʙᴇʀ:* ${m.sender.split('@')[0]}
 > *║◦ᴏᴘᴇʀᴀᴛᴏʀ:* ${kodeEpep}`, 
-  `╭─〔 計さ SYSTEM 〕─╮
+  ];/*╭─〔 計さ SYSTEM 〕─╮
 │ ✦ ボット情報
 │ ◦ 作成者 : ${namaOwner}
 │ ◦ ボット名 : ${botname}
@@ -2070,7 +2279,7 @@ let tmenu = [
 │ ◦ 番号 : ${m.sender.split('@')[0]}
 │ ◦ キャリア : ${kodeEpep}
 ╰───────────────╯`
-];
+];*/
 
 let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
 
@@ -2082,7 +2291,7 @@ let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
             nativeFlowMessage: {
                 messageParamsJson: JSON.stringify({
                     limited_time_offer: {
-                        text: "Mikasa MDV6",
+                        text: "Mikasa MD V7",
                         url: "t.me/LanzOfficial",
                         copy_code: "VIP Version Mikasa MD",
                         expiration_time: Date.now() * 999
@@ -2091,12 +2300,12 @@ let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
                         in_thread_buttons_limit: 2,
                         divider_indices: [1, 2, 3, 4, 5, 999],
                         list_title: "LanzOfficial",
-                        button_title: "Mikasa MD Version 6.0.0"
+                        button_title: "Mikasa MD Version 7.0.0"
                     },
                     tap_target_configuration: {
                         title: "▸ X ◂",
                         description: "bomboclard",
-                        canonical_url: "https://lanz0fficial-freeapi.vercel.app",
+                        canonical_url: "https://lanzcihuyyy-apitermux.vercel.app",
                         domain: "shop.example.com",
                         button_index: 0
                     }
@@ -2113,6 +2322,7 @@ let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
                     {
                         name: "single_select",
                         buttonParamsJson: JSON.stringify({
+                            icon: 'REVIEW', 
                             title: "Mikasa MD",
                             sections: [
                                 {
@@ -2274,8 +2484,8 @@ let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
                  name: "cta_url",
                  buttonParamsJson: JSON.stringify({
                    display_text: "my website",
-                   url: "https://lanz0fficial-freeapi.vercel.app",
-                   merchant_url: "https://lanz0fficial-freeapi.vercel.app"
+                   url: "L4nzexẹ.ceo",
+                   merchant_url: "L4nzexẹ.ceo"
                  })
                },
                     {
@@ -2296,12 +2506,73 @@ let textmenu = tmenu[Math.floor(Math.random() * tmenu.length)];
             }
         }
     }, { quoted: qtoko });
-    await sleep(2000)
+    await sleep(1000)
     Putzz.sendMessage(m.chat, {
         audio: fs.readFileSync('./source/media/sound.mp3'),
         mimetype: 'audio/mp4',
         ptt: true
     }, { quoted: qtoko })
+}
+break
+case 'bigoverflow': {
+try {
+
+const sharp = require('sharp')
+
+let q = m.quoted ? m.quoted : m
+let mime = (q.msg || q).mimetype || ''
+
+if (!/image/.test(mime))
+return m.reply('Reply gambar')
+
+let media = await q.download()
+
+/* =========================
+   RESIZE NORMAL DULU
+========================= */
+
+let img = await sharp(media)
+.resize(900, 900)
+.png()
+.toBuffer()
+
+/* =========================
+   CROP PAKSA
+========================= */
+
+let overflow = await sharp(img)
+.extract({
+left: 250,
+top: 150,
+width: 512,
+height: 512
+})
+.webp({
+quality: 100
+})
+.toBuffer()
+
+/* =========================
+   SEND
+========================= */
+
+await Putzz.sendMessage(
+m.chat,
+{
+sticker: overflow
+},
+{
+quoted: m
+}
+)
+
+} catch (e) {
+
+console.log(e)
+
+m.reply('Error overflow')
+
+}
 }
 break
 case 'maklu':
@@ -3105,7 +3376,18 @@ case 'listbanchat': case "listbl":{
   ReplyLanz(teks);
 }
 break
-
+case 'autoaigc':
+case 'autoai': {
+if (!isOwner) return reply(mess.owner)
+if (!args[0]) return m.reply(`Contoh: ${prefix+command} on/off`)
+if (args[0] === 'on') {
+global.autoaigc = true
+await m.reply(`Sukses mengaktifkan ${command}.`)
+} else if (args[0] === 'off') {
+global.autoaigc = false
+await m.reply(`Sukses menonaktifkan ${command}.`)
+}}
+break
 // sumber? Ch ini 
 // janlup npm i archiver
 
@@ -3391,7 +3673,7 @@ ${ki}[ User Information ]${ki}
 ┃  ❏ ${prefix}tohd
 ┃  ❏ ${prefix}shortlink
 ┃  ❏ ${prefix}shortlink2
-┃  ❏ ${prefix}enc - enc4
+┃  ❏ ${prefix}enc
 ┗═━═━═━═━═━═━═━═━═╴`
         Putzz.sendMessage(m.chat, {
         text: fun,
@@ -3408,6 +3690,87 @@ ${ki}[ User Information ]${ki}
     }, { quoted: qtext })
 };
 break;
+
+case "getmsg": {
+  try {
+    if (!quoted) return m.reply("Reply pesan")
+
+    let teks = util.inspect(quoted.message, {
+      depth: 2,
+      compact: true
+    })
+
+    teks = teks.slice(0, 4000)
+
+    await Putzz.sendMessage(
+      m.chat,
+      {
+        text: teks
+      },
+      {
+        quoted: m
+      }
+    )
+
+  } catch (e) {
+    m.reply(util.format(e))
+  }
+}
+break
+case 'putz-dl':
+case "mdl": case "menudownload": case "downloadmenu": {
+let fun = `*ʜᴀʟʟᴏ ${m.pushName}.*  ɴᴀᴍᴀ ꜱᴀyᴀ ᴀᴅᴀʟᴀʜ *${botname}*, ʏᴀɴɢ ʙɪsᴀ ᴍᴇᴍʙᴀɴᴛᴜ ᴋᴀᴍᴜ
+
+ʙᴏᴛ ɪɴɪ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴜɴᴛᴜᴋ ʙᴇʀʙᴀɢᴀɪ ᴍᴀᴄᴀᴍ, ʙᴏᴛ ɪɴɪ ᴄᴏᴄᴏᴋ ᴜɴᴛᴜᴋ ᴊᴀɢᴀ ɢʀᴜᴘ. ᴋᴀᴍᴜ ʙɪsᴀ ɢᴜɴᴀᴋᴀɴ ʙᴏᴛ ɪɴɪ ᴜɴᴛᴜᴋ ᴜɴᴅᴜʜ ᴍᴇᴅɪᴀ,ᴇᴅᴜᴋᴀsɪ, ʙᴇʟᴀᴊᴀʀ ᴅᴀɴ ʟᴀɪɴɴʏᴀ, ʏᴀɴɢ ᴅᴀᴘᴀᴛ ᴍᴇᴍʙᴜᴀᴛ ʟᴇʙɪʜ ᴍᴜᴅᴀʜ ᴜɴᴛᴜᴋ ᴍᴇɴᴊᴀʟᴀɴᴋᴀɴ sᴇʜᴀʀɪ ʜᴀʀɪ
+
+✘ ᴄʀᴇᴀᴛᴏʀ: ${namaOwner}
+
+ᴊɪᴋᴀ ᴀᴅᴀ ᴍᴀsᴀʟᴀʜ ᴅᴀʟᴀᴍ ᴘᴇɴɢɢᴜɴᴀᴀɴ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ ᴄʀᴇᴀᴛᴏʀ ᴜɴᴛᴜᴋ ᴍᴇɴᴀɴʏᴀᴋᴀɴ *.ᴏᴡɴᴇʀ*
+
+${ki}[ Mikasa Information ]${ki}
+┌  ◦ ɴᴀᴍᴇ ʙᴏᴛ : ${global.botname}
+│  ◦ ᴠᴇʀsɪᴏɴ : ${global.version}
+│  ◦ ʙᴀɪʟᴇʏs : ${global.baileys}
+│  ◦ ᴄʀᴇᴀᴛᴏʀ : ${global.namaOwner}
+└  ◦ ғʀᴇғɪx : [ ᴍᴜʟᴛɪᴘʀᴇғɪx ]
+
+${ki}[ User Information ]${ki}
+┌  ◦ sᴛᴀᴛᴜs : ${isCreator ? 'ᴏᴡɴᴇʀ' : isUserPremium ? 'ᴘʀᴇᴍɪᴜᴍ' : 'ғʀᴇᴇ'}
+│  ◦ ɴᴏᴍᴏʀ :  @${m?.sender.split('@')[0]} 
+└  ◦ ɴᴀᴍᴇ : ${m.pushName}
+
+──────────────────
+*<> [ ᴅᴏᴡɴʟᴏᴀᴅ - ᴍᴇɴᴜ ] <>*
+┏─────────────────
+┃  ❏ ${prefix}tiktok
+┃  ❏ ${prefix}tiktokmp3
+┃  ❏ ${prefix}facebook
+┃  ❏ ${prefix}capcut
+┃  ❏ ${prefix}instagram
+┃  ❏ ${prefix}ytmp3
+┃  ❏ ${prefix}ytmp4
+┃  ❏ ${prefix}play
+┃  ❏ ${prefix}playvid
+┃  ❏ ${prefix}gitclone
+┃  ❏ ${prefix}mediafire
+┗═━═━═━═━═━═━═━═━═╴`
+        Putzz.sendMessage(m.chat, {
+        video: {url: "https://files.catbox.moe/lejkom.mp4"}, 
+        gifPlayback: true, 
+        caption: fun,
+        contextInfo: {
+            externalAdReply: {
+                title: `Mikasa-MD Made With`,
+                body: `Putzzslebew`,
+                thumbnailUrl: ppmenu,
+                sourceUrl: global.ceha,
+                mediaType: 1,
+                renderLargerThumbnail: false
+            }
+        }
+    }, { quoted: lol })
+};
+break;/*
 case 'putz-dl':
 case "mdl": case "menudownload": case "downloadmenu": {
 let fun = `*ʜᴀʟʟᴏ ${m.pushName}.*  ɴᴀᴍᴀ ꜱᴀyᴀ ᴀᴅᴀʟᴀʜ *${botname}*, ʏᴀɴɢ ʙɪsᴀ ᴍᴇᴍʙᴀɴᴛᴜ ᴋᴀᴍᴜ
@@ -3459,59 +3822,7 @@ ${ki}[ User Information ]${ki}
         }
     }, { quoted: qtext })
 };
-break;
-case 'putz-dl':
-case "mdl": case "menudownload": case "downloadmenu": {
-let fun = `*ʜᴀʟʟᴏ ${m.pushName}.*  ɴᴀᴍᴀ ꜱᴀyᴀ ᴀᴅᴀʟᴀʜ *${botname}*, ʏᴀɴɢ ʙɪsᴀ ᴍᴇᴍʙᴀɴᴛᴜ ᴋᴀᴍᴜ
-
-ʙᴏᴛ ɪɴɪ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴜɴᴛᴜᴋ ʙᴇʀʙᴀɢᴀɪ ᴍᴀᴄᴀᴍ, ʙᴏᴛ ɪɴɪ ᴄᴏᴄᴏᴋ ᴜɴᴛᴜᴋ ᴊᴀɢᴀ ɢʀᴜᴘ. ᴋᴀᴍᴜ ʙɪsᴀ ɢᴜɴᴀᴋᴀɴ ʙᴏᴛ ɪɴɪ ᴜɴᴛᴜᴋ ᴜɴᴅᴜʜ ᴍᴇᴅɪᴀ,ᴇᴅᴜᴋᴀsɪ, ʙᴇʟᴀᴊᴀʀ ᴅᴀɴ ʟᴀɪɴɴʏᴀ, ʏᴀɴɢ ᴅᴀᴘᴀᴛ ᴍᴇᴍʙᴜᴀᴛ ʟᴇʙɪʜ ᴍᴜᴅᴀʜ ᴜɴᴛᴜᴋ ᴍᴇɴᴊᴀʟᴀɴᴋᴀɴ sᴇʜᴀʀɪ ʜᴀʀɪ
-
-✘ ᴄʀᴇᴀᴛᴏʀ: ${namaOwner}
-
-ᴊɪᴋᴀ ᴀᴅᴀ ᴍᴀsᴀʟᴀʜ ᴅᴀʟᴀᴍ ᴘᴇɴɢɢᴜɴᴀᴀɴ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ ᴄʀᴇᴀᴛᴏʀ ᴜɴᴛᴜᴋ ᴍᴇɴᴀɴʏᴀᴋᴀɴ *.ᴏᴡɴᴇʀ*
-
-${ki}[ Mikasa Information ]${ki}
-┌  ◦ ɴᴀᴍᴇ ʙᴏᴛ : ${global.botname}
-│  ◦ ᴠᴇʀsɪᴏɴ : ${global.version}
-│  ◦ ʙᴀɪʟᴇʏs : ${global.baileys}
-│  ◦ ᴄʀᴇᴀᴛᴏʀ : ${global.namaOwner}
-└  ◦ ғʀᴇғɪx : [ ᴍᴜʟᴛɪᴘʀᴇғɪx ]
-
-${ki}[ User Information ]${ki}
-┌  ◦ sᴛᴀᴛᴜs : ${isCreator ? 'ᴏᴡɴᴇʀ' : isUserPremium ? 'ᴘʀᴇᴍɪᴜᴍ' : 'ғʀᴇᴇ'}
-│  ◦ ɴᴏᴍᴏʀ :  @${m?.sender.split('@')[0]} 
-└  ◦ ɴᴀᴍᴇ : ${m.pushName}
-
-──────────────────
-*<> [ ᴅᴏᴡɴʟᴏᴀᴅ - ᴍᴇɴᴜ ] <>*
-┏─────────────────
-┃  ❏ ${prefix}tiktok
-┃  ❏ ${prefix}tiktokmp3
-┃  ❏ ${prefix}facebook
-┃  ❏ ${prefix}capcut
-┃  ❏ ${prefix}instagram
-┃  ❏ ${prefix}ytmp3
-┃  ❏ ${prefix}ytmp4
-┃  ❏ ${prefix}play
-┃  ❏ ${prefix}playvid
-┃  ❏ ${prefix}gitclone
-┃  ❏ ${prefix}mediafire
-┗═━═━═━═━═━═━═━═━═╴`
-        Putzz.sendMessage(m.chat, {
-        text: fun,
-        contextInfo: {
-            externalAdReply: {
-                title: `Mikasa-MD Made With`,
-                body: `Putzzslebew`,
-                thumbnailUrl: ppmenu,
-                sourceUrl: global.ceha,
-                mediaType: 1,
-                renderLargerThumbnail: true
-            }
-        }
-    }, { quoted: qtext })
-};
-break;
+break;*/
 case 'putz-store':
 case "mstr": case "menustore": case "storemenu": {
 let fun = `*ʜᴀʟʟᴏ ${m.pushName}.*  ɴᴀᴍᴀ ꜱᴀyᴀ ᴀᴅᴀʟᴀʜ *${botname}*, ʏᴀɴɢ ʙɪsᴀ ᴍᴇᴍʙᴀɴᴛᴜ ᴋᴀᴍᴜ
@@ -6317,7 +6628,7 @@ case "fakestoryapi": {
     await Putzz.sendMessage(m.chat, { react: { text: '⏳', key: m.key } });
     let ppUrl = await Putzz.profilePictureUrl(m.sender, 'image').catch(_ => '');
     
-    let url = `https://lanz0fficial-freeapi.vercel.app/api/fakestory?username=${encodeURIComponent(username)}&caption=${encodeURIComponent(caption)}&pp=${encodeURIComponent(ppUrl || '')}`;
+    let url = `https://lanzcihuyyy-apitermux.vercel.app/api/fakestory?username=${encodeURIComponent(username)}&caption=${encodeURIComponent(caption)}&pp=${encodeURIComponent(ppUrl || '')}`;
     
     // Tambahkan permintaan HTTP untuk mengambil SVG
     let res = await fetch(url);
@@ -11532,7 +11843,7 @@ if (!stream) return ReplyLanz('gagal download file');
 
 }
 break
-case "enc": {
+case "encbs": {
   //Limit()) return ReplyLanz("Limit kamu telah habis!\nketik *.buylimit* untuk membeli limit")
   const jsconfuser = await import("js-confuser");
 
@@ -11585,7 +11896,11 @@ case "enc2": {
   if (!m.quoted) return ReplyLanz("Reply file .js untuk dienkripsi!");
 
   const obj = m.quoted?.message || m.quoted
-  const filename = obj?.documentMessage?.fileName || obj?.fileName || null
+  const filename =
+  m.quoted?.message?.documentMessage?.fileName ||
+  m.quoted?.message?.imageMessage?.fileName ||
+  m.quoted?.message?.videoMessage?.fileName ||
+  null
   if (!filename) return ReplyLanz("Reply file .js untuk dienkripsi!");
 
   await ReplyLanz(`🌀 Encrypt tingkat tinggi untuk ${filename}...`);
@@ -11633,8 +11948,12 @@ case "enc3": {
 
   if (!m.quoted) return ReplyLanz("Reply file .js untuk dienkripsi!");
 
-  const obj = m.quoted?.message || m.quoted
-  const filename = obj?.documentMessage?.fileName || obj?.fileName || null
+  const obj = m.quoted ? m.quoted : m
+const filename =
+  m.quoted?.message?.documentMessage?.fileName ||
+  m.quoted?.message?.imageMessage?.fileName ||
+  m.quoted?.message?.videoMessage?.fileName ||
+  null
   if (!filename) return ReplyLanz("Reply file .js untuk dienkripsi!");
 
   await ReplyLanz(`🧬 Melakukan stealth encryption pada ${filename}...`);
@@ -11674,89 +11993,305 @@ case "enc3": {
   }
 }
 break;
-case 'enc4': {
-if (!m.quoted) return ReplyLanz("\n❌ ғᴏʀᴍᴀᴛ ʜᴀʀᴜs ғɪʟᴇ.ᴊs\n")
-    if (!text || !text.includes('|'))
-        return ReplyLanz('\n❌ Contoh:\n.enc text1|text2\n.enc LanzOfficial|Kelazz\n')
-    try {
-        ReplyLanz('⚡ Processing hard code encryption...');
+case 'enc': {
 
-        const fs = require('fs');
-        const path = require('path');
-        const axios = require('axios');
-        const JsConfuser = require('js-confuser');
-        let [text1, text2] = text.split('|')
-        // download file dari quoted
-        let media = await m.quoted.download();
-        if (!media) return ReplyLanz('❌ Gagal mengunduh file');
-        const fileName =
-  m.quoted?.message?.documentMessage?.fileName ||
-  m.quoted?.message?.imageMessage?.fileName ||
-  m.quoted?.message?.videoMessage?.fileName ||
-  null
-        let codeString = media.toString('utf-8');
-        if (typeof codeString !== 'string')
-            throw new Error('File bukan string JavaScript');
+if (!m.quoted)
+return ReplyLanz("❌ Reply file .js")
 
-        let obfuscated = await JsConfuser.obfuscate(codeString, {
-            target: "node",
-            compact: true,
-            controlFlowFlattening: 0.8,
-            deadCode: 0.3,
-            dispatcher: true,
-            duplicateLiteralsRemoval: 0.7,
-            globalConcealing: true,
-            minify: true,
-            movedDeclarations: true,
-            objectExtraction: true,
-            renameVariables: true,
-            renameGlobals: true,
-            stringEncoding: true,
-            stringSplitting: 0.5,
-            stringConcealing: true,
-            stringCompression: true,
-            opaquePredicates: 0.9,
-            calculator: true,
-            hexadecimalNumbers: true,
-            shuffle: true,
-            identifierGenerator: () =>
-                `高宝座${text1}齐${text2}高宝座` +
-                Math.random().toString(36).substring(7),
-        });
+try {
 
-        let result = typeof obfuscated === 'object'
-            ? obfuscated.code
-            : obfuscated;
+ReplyLanz("⚡ Encrypting script...")
 
-        if (typeof result !== 'string')
-            throw new Error('Hasil enkripsi tidak valid');
+let media = await m.quoted.download()
 
-        let outFile = path.join(
-            __dirname,
-            `encrypted_${m.quoted.fileName}`
-        );
+if (!media)
+return ReplyLanz("❌ Gagal download file")
 
-        fs.writeFileSync(outFile, result);
+let fileName =
+m.quoted?.message?.documentMessage?.fileName ||
+"encrypt.js"
 
-        await Putzz.sendMessage(
-            m.chat,
-            {
-                document: fs.readFileSync(outFile),
-                fileName: `${fileName}_${m.pushName}.js`,
-                mimetype: 'application/javascript',
-                caption: '✅ Encryption Successful\n• Type: Hard Code'
-            },
-            { quoted: m }
-        );
+let code =
+media.toString("utf-8")
 
-        fs.unlinkSync(outFile);
-    } catch (e) {
-        console.error(e);
-        ReplyLanz('❌ Error: ' + e.message);
-    }
+/* =========================
+   SAFE CHINA CHAOS
+========================= */
+
+function randomChina(len = 12) {
+
+const chars =
+"高宝座齐天龙神暗影皇炎剑魔尊鬼夜雷星月王玄幻破灭苍穹九幽冥凰"
+
+let result = "_"
+
+for (let i = 0; i < len; i++) {
+
+result += chars.charAt(
+Math.floor(Math.random() * chars.length)
+)
+
+}
+
+return result
+}
+
+let chaos = ""
+
+for (let i = 0; i < 10; i++) {
+
+chaos +=
+`var ${randomChina()}="${randomChina(25)}";\n`
+
+}
+
+/* =========================
+   OBFUSCATE
+========================= */
+
+let obfuscated =
+await JsConfuser.obfuscate(
+chaos + code,
+{
+
+target: "node",
+
+compact: true,
+
+minify: true,
+
+renameVariables: false,
+
+renameGlobals: false,
+
+stringEncoding: true,
+
+stringSplitting: 0.1,
+
+stringConcealing: true,
+
+stringCompression: true,
+
+controlFlowFlattening: 0.1,
+
+deadCode: 0.01,
+
+shuffle: true,
+
+calculator: true,
+
+hexadecimalNumbers: true
+
+}
+)
+
+/* =========================
+   RESULT
+========================= */
+
+let result =
+typeof obfuscated === "object"
+? obfuscated.code
+: obfuscated
+
+if (!result)
+throw new Error("Encrypt gagal")
+
+/* =========================
+   SEND FILE
+========================= */
+
+await Putzz.sendMessage(
+m.chat,
+{
+document: Buffer.from(result),
+
+fileName:
+`Encrypted_${fileName}`,
+
+mimetype:
+"application/javascript",
+
+caption:
+`✅ Encryption Success
+• Stable Encrypt
+• China Chaos Inject
+• No Duplicate Variable`
+},
+{
+quoted: m
+}
+)
+
+} catch (e) {
+
+console.log(e)
+
+ReplyLanz(
+"❌ Error:\n" + e.message
+)
+
+}
+
 }
 break;
+case 'engc': {
 
+if (!m.quoted)
+return ReplyLanz("❌ Reply file .js")
+
+if (!text || !text.includes('|'))
+return ReplyLanz(
+`❌ Contoh:
+.enc Lanz|Official`
+)
+
+try {
+
+ReplyLanz('⚡ Processing hard encryption...')
+
+let [text1, text2] = text.split('|')
+
+/* =========================
+   DOWNLOAD FILE
+========================= */
+
+let media = await m.quoted.download()
+
+if (!media)
+return ReplyLanz('❌ Gagal download file')
+
+/* =========================
+   GET FILE NAME
+========================= */
+
+let fileName =
+m.quoted?.message?.documentMessage?.fileName ||
+"encrypt.js"
+
+/* =========================
+   BUFFER TO STRING
+========================= */
+
+let codeString = media.toString('utf-8')
+
+if (typeof codeString !== 'string')
+throw new Error('File bukan javascript')
+
+/* =========================
+   OBFUSCATE
+========================= */
+
+let obfuscated = await JsConfuser.obfuscate(
+codeString,
+{
+target: "node",
+
+compact: true,
+
+controlFlowFlattening: 0.8,
+
+deadCode: 0.2,
+
+dispatcher: true,
+
+duplicateLiteralsRemoval: 0.7,
+
+globalConcealing: true,
+
+minify: true,
+
+movedDeclarations: true,
+
+objectExtraction: true,
+
+renameVariables: true,
+
+renameGlobals: true,
+
+identifierGenerator: 'randomized',
+
+stringEncoding: true,
+
+stringSplitting: 0.5,
+
+stringConcealing: true,
+
+stringCompression: true,
+
+opaquePredicates: 0.9,
+
+calculator: true,
+
+hexadecimalNumbers: true,
+
+shuffle: true
+
+}
+)
+
+/* =========================
+   RESULT
+========================= */
+
+let result =
+typeof obfuscated === 'object'
+? obfuscated.code
+: obfuscated
+
+if (typeof result !== 'string')
+throw new Error('Encrypt gagal')
+
+/* =========================
+   OUTPUT FILE
+========================= */
+
+let outFile =
+`./encrypted_${Date.now()}.js`
+
+fs.writeFileSync(outFile, result)
+
+/* =========================
+   SEND FILE
+========================= */
+
+await Putzz.sendMessage(
+m.chat,
+{
+document: fs.readFileSync(outFile),
+
+fileName:
+`encrypted_${fileName}`,
+
+mimetype:
+'application/javascript',
+
+caption:
+'✅ Encryption Successful\n• Type: Hard Code'
+},
+{
+quoted: m
+}
+)
+
+/* =========================
+   DELETE FILE
+========================= */
+
+fs.unlinkSync(outFile)
+
+} catch (e) {
+
+console.log(e)
+
+ReplyLanz(
+'❌ Error:\n' + e.message
+)
+
+}
+
+}
+break;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 case "shortlink": case "shorturl": {
@@ -12448,7 +12983,7 @@ case "scfree2": {
               highlight_label: "BERBAYAR 30K",
               rows: [
                 { title: "𝟭: Mikasa MD V5", description: `📦 Srcipt serbaguna dan langkah`, id: `${prefix}bp` },
-                { title: "𝟭: Lanxbot V4", description: `📦 Script Free langsung ambil`, id: `${prefix}👻 https://www.mediafire.com/file/nhc8o61d9cjv641/Lanzx_Bot_-_%255B_fix_pairing_%255D.zip/file`}, 
+                { title: "𝟭: Mikasa MD V4", description: `📦 Script Free langsung ambil`, id: `${prefix}👻 https://www.mediafire.com/file/nhc8o61d9cjv641/Lanzx_Bot_-_%255B_fix_pairing_%255D.zip/file`}, 
                 ]}, 
                 {
                 title: 'ALL SCFREE BY LANZ', 
@@ -15147,7 +15682,7 @@ orange: "orange"
 let finalColor = warna[color] || "black"
 
 try {
-let url = `https://lanz0fficial-freeapi.vercel.app/api/brat?text=${encodeURIComponent(teks)}&color=${finalColor}`
+let url = `https://lanzcihuyyy-apitermux.vercel.app/api/brat?text=${encodeURIComponent(teks)}&color=${finalColor}`
 let res = await fetch(url)
 if (!res.ok) return ReplyLanz("Gagal membuat brat")
 
@@ -15188,7 +15723,7 @@ orange: "orange"
 let finalColor = warna[color] || "black"
 
 try {
-let url = `https://lanz0fficial-freeapi.vercel.app/api/bratvid?text=${encodeURIComponent(teks)}&color=${finalColor}`
+let url = `https://lanzcihuyyy-apitermux.vercel.app/api/bratvid?text=${encodeURIComponent(teks)}&color=${finalColor}`
 let res = await fetch(url)
 if (!res.ok) return ReplyLanz("Gagal membuat brat")
 
@@ -16222,7 +16757,7 @@ break;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 case "s": case "sticker": case "stiker": {
-  if (!/image/.test(mime)) return ReplyLanz(example("namamu dengan kirim media"))
+  if (!/image|video/.test(mime)) return ReplyLanz(example("namamu dengan kirim media"))
 var image = await Putzz.downloadAndSaveMediaMessage(m.quoted)
 await Putzz.sendAsSticker(m.chat, image, m, {packname: global.packname})
 await fs.unlinkSync(image)
@@ -16379,7 +16914,7 @@ await fs.unlinkSync(media)
 break
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-case "tougrl": {
+case "tourl4": {
     if (!m.quoted) return ReplyLanz(example("dengan kirim atau reply foto!"));
 
     const uploadToSupa = async (buffer) => {
@@ -16532,7 +17067,7 @@ case "tougrl": {
     await processUpload();
 }
 break;
-case "tourll": {
+case "tourl2": {
 const FormData = require("form-data");
 const mime = require("mime-types");
 const axios = require("axios");
@@ -16547,7 +17082,7 @@ async function pomf2(filePath) {
         const form = new FormData();
         form.append("files[]", fs.createReadStream(filePath), {
             contentType,
-            filename: fileName, // Paksa nama file tetap JPG
+            filename: fileName+'.jpg', // Paksa nama file tetap JPG
         });
         const response = await axios.post("https://qu.ax/upload.php", form, {
             headers: {
@@ -16611,14 +17146,444 @@ async function pomf2(filePath) {
     }
 }
 break
+async function uploadToCatbox(filePath) {
+try {
+
+const buffer = fs.readFileSync(filePath)
+
+const type = await fromBuffer(buffer)
+
+const ext = type?.ext || "jpg"
+const mime = type?.mime || "image/jpeg"
+
+const form = new FormData()
+
+form.append("reqtype", "fileupload")
+
+form.append(
+"fileToUpload",
+buffer,
+{
+filename: `upload.${ext}`,
+contentType: mime
+}
+)
+
+const res = await axios({
+method: "POST",
+url: "https://catbox.moe/user/api.php",
+data: form,
+headers: {
+...form.getHeaders(),
+"User-Agent": "Mozilla/5.0"
+},
+maxContentLength: Infinity,
+maxBodyLength: Infinity
+})
+
+const data = String(res.data).trim()
+
+console.log("CATBOX:", data)
+
+if (
+!data.startsWith("https://files.catbox.moe/")
+) {
+throw new Error(data)
+}
+
+return data
+
+} catch (err) {
+
+console.log(
+"Catbox Error:",
+err?.response?.data || err.message
+)
+
+return null
+}
+}
 case 'tourl': {
-	if (!mime) return ReplyLanz(`Kirim/Reply Media Dengan Caption ${prefix + command}`);
-	try {
-		let media = await Putzz.downloadAndSaveMediaMessage(qmsg);
+try {
 
-		// ✅ semua jenis media masuk (image, video, document, dll)
-		let response = await CatBox(media);
+if (!quoted && !/image|video|audio|sticker|document/.test(mime)) {
+return ReplyLanz(example("reply/kirim media"))
+}
 
+const fs = require("fs")
+const path = require("path")
+const axios = require("axios")
+const FormData = require("form-data")
+const mimeTypes = require("mime-types")
+const { fromBuffer } = require("file-type")
+const { ImageUploadService } = require("node-upload-images")
+
+const quotedMsg = m.quoted ? m.quoted : m
+const media = await Putzz.downloadAndSaveMediaMessage(quotedMsg)
+
+/* =========================
+   FUNCTIONS
+========================= */
+
+async function uploadToPixhost(filePath) {
+try {
+
+const service = new ImageUploadService("pixhost.to")
+
+const { directLink } =
+await service.uploadFromBinary(
+fs.readFileSync(filePath),
+`Lanz-${Date.now()}.jpg`
+)
+
+return directLink.toString()
+
+} catch (e) {
+
+console.log("PixHost Error:", e.message)
+
+return null
+}
+}
+
+async function uploadToUguu(filePath) {
+try {
+
+const form = new FormData()
+
+form.append(
+"files[]",
+fs.createReadStream(filePath)
+)
+
+const { data } = await axios.post(
+"https://uguu.se/upload.php",
+form,
+{
+headers: form.getHeaders()
+}
+)
+
+return data.files[0].url
+
+} catch (e) {
+
+console.log("Uguu Error:", e.message)
+
+return null
+}
+}
+
+async function uploadToSupa(buffer) {
+try {
+
+const form = new FormData()
+
+form.append("file", buffer, "upload.jpg")
+
+const res = await axios.post(
+"https://i.supa.codes/api/upload",
+form,
+{
+headers: form.getHeaders()
+}
+)
+
+return res.data?.link || null
+
+} catch (error) {
+
+console.error(
+"Supa Upload Error:",
+error?.response?.data || error.message
+)
+
+return null
+}
+}
+
+async function uploadToTmpFiles(filePath) {
+try {
+
+const buffer = fs.readFileSync(filePath)
+
+const type = await fromBuffer(buffer)
+
+const ext = type?.ext || "jpg"
+const mimetype = type?.mime || "image/jpeg"
+
+const form = new FormData()
+
+form.append("file", buffer, {
+filename: `${Date.now()}.${ext}`,
+contentType: mimetype
+})
+
+const res = await axios.post(
+"https://tmpfiles.org/api/v1/upload",
+form,
+{
+headers: form.getHeaders()
+}
+)
+
+return res.data.data.url
+.replace("tmpfiles.org/", "tmpfiles.org/dl/")
+
+} catch (error) {
+
+console.error(
+"TmpFiles Error:",
+error?.response?.data || error.message
+)
+
+return null
+}
+}
+
+async function pomf2(filePath) {
+try {
+
+if (!fs.existsSync(filePath)) {
+throw new Error("File tidak ditemukan")
+}
+
+const contentType =
+mimeTypes.lookup(filePath) ||
+"application/octet-stream"
+
+const fileName = path.basename(filePath)
+
+const form = new FormData()
+
+form.append(
+"files[]",
+fs.createReadStream(filePath),
+{
+contentType,
+filename: fileName
+}
+)
+
+const response = await axios.post(
+"https://qu.ax/upload.php",
+form,
+{
+headers: {
+...form.getHeaders()
+}
+}
+)
+
+if (
+!response.data.success ||
+!response.data.files?.length
+) {
+throw new Error("Upload gagal")
+}
+
+return response.data.files[0].url
+
+} catch (err) {
+
+console.error(
+"Pomf2 Error:",
+err?.response?.data || err.message
+)
+
+return null
+}
+}
+
+/* =========================
+   START
+========================= */
+
+await Putzz.sendMessage(m.chat, {
+react: {
+text: "⏳",
+key: m.key
+}
+})
+
+const buffer = fs.readFileSync(media)
+
+const [
+pixhost,
+catbox,
+uguu,
+supa,
+tmpfiles,
+quax
+] = await Promise.all([
+
+uploadToPixhost(media),
+uploadToCatbox(media),
+uploadToUguu(media),
+uploadToSupa(buffer),
+uploadToTmpFiles(media),
+pomf2(media)
+
+])
+
+let results = [
+{
+name: "PixHost",
+url: pixhost
+},
+{
+name: "Catbox",
+url: catbox
+},
+{
+name: "Uguu",
+url: uguu
+},
+{
+name: "Supa",
+url: supa
+},
+{
+name: "TmpFiles",
+url: tmpfiles
+},
+{
+name: "Qu.ax",
+url: quax
+}
+].filter(v => v.url)
+
+if (results.length < 1) {
+throw new Error("Semua upload gagal")
+}
+
+let cards = []
+
+for (let item of results) {
+
+cards.push({
+
+header: proto.Message.InteractiveMessage.Header.create({
+
+...(await prepareWAMessageMedia(
+{
+image: { url: ppmenu }
+},
+{
+upload: Putzz.waUploadToServer
+}
+)),
+
+title: `${item.name}`,
+gifPlayback: true,
+subtitle: global.namaOwner,
+hasMediaAttachment: false
+
+}),
+
+body: {
+text:
+`*UPLOAD SUCCESS* ✅\n\n` +
+`• Server : ${item.name}\n` +
+`• User : ${m.pushName}`
+},
+
+nativeFlowMessage: {
+buttons: [
+{
+name: "cta_url",
+buttonParamsJson: JSON.stringify({
+display_text: "Open URL",
+url: item.url
+})
+},
+{
+name: "cta_copy",
+buttonParamsJson: JSON.stringify({
+display_text: "Copy Link",
+id: "copy_url",
+copy_code: item.url
+})
+}
+]
+}
+
+})
+}
+
+let msg = generateWAMessageFromContent(
+m.chat,
+{
+viewOnceMessage: {
+message: {
+interactiveMessage: {
+body: {
+text:
+`*Upload berhasil ✅*\n` +
+`Total server : ${results.length}`
+},
+
+carouselMessage: {
+cards,
+messageVersion: 1
+}
+}
+}
+}
+},
+{
+quoted: m
+}
+)
+
+await Putzz.relayMessage(
+msg.key.remoteJid,
+msg.message,
+{
+messageId: msg.key.id
+}
+)
+
+fs.unlinkSync(media)
+
+await Putzz.sendMessage(m.chat, {
+react: {
+text: "✅",
+key: m.key
+}
+})
+
+} catch (err) {
+
+console.log(err)
+
+ReplyLanz(
+`Upload gagal ❌\n\n${err.message}`
+)
+
+await Putzz.sendMessage(m.chat, {
+react: {
+text: "❌",
+key: m.key
+}
+})
+
+}
+}
+break;
+
+case 'tourlp': {
+try{
+    if (!/image/.test(mime)) return ReplyLanz(example("dengan kirim/reply foto"))
+//	if (!quoted) return ReplyLanz(`Kirim/Reply Media Dengan Caption ${prefix + command}`);
+	const quoted = m.quoted ? m.quoted : m
+    let media = await Putzz.downloadAndSaveMediaMessage(quoted);
+// ✅ semua jenis media masuk (image, video, document, dll)
+//		let response = await CatBox(media);
+const { ImageUploadService } = require('node-upload-images')
+const service = new ImageUploadService('pixhost.to');
+const { directLink } = await service.uploadFromBinary(fs.readFileSync(media), `Lanzcihuyy.png`);
+const url = directLink.toString()
 		let fileSize = (fs.statSync(media).size / 1024).toFixed(2);
 		let uploadDate = new Date().toLocaleString();
 		let uploader = `${m.pushName}`;
@@ -16651,7 +17616,7 @@ case 'tourl': {
 											buttons: [
 												{
 													name: "cta_copy",
-													buttonParamsJson: `{"display_text":"Click to get link","id":"123456789","copy_code":"${response}"}`
+													buttonParamsJson: `{"display_text":"Click to get link","id":"123456789","copy_code":"${url}"}`
 												}
 											],
 										},
@@ -16679,10 +17644,6 @@ case 'tourl': {
 }
 break;
 case 'tourl3': {
-//    const fs = require('fs');
-//    const path =require('path');
-//     =require('axios');
-//     = require('form-data');
     const { fromBuffer } = require('file-type');
     const q = m.quoted || m;
     const mimetype = (q.msg || q).mimetype || q.mediaType || '';
@@ -21598,10 +22559,10 @@ case 'deployzip': {
   const axios = require('axios')
 
   if (!m.quoted) return ReplyLanz('Reply file zip nya')
-
+  if (!text) return ReplyLanz('harap masukan nama repo') 
   const token = global.githubToken
   const owner = 'LanzNotDev'
-  const repo = 'baileys'
+  const repo = text
 
   if (!token) return ReplyLanz('Token github belum di set')
 
@@ -22246,8 +23207,8 @@ buttons: [
 name: "cta_url",
 buttonParamsJson: JSON.stringify({
 display_text: "Open Website",
-url: "https://lanz0fficial-freeapi.vercel.app",
-merchant_url: "https://lanz0fficial-freeapi.vercel.app"
+url: "https://lanzcihuyyy-apitermux.vercel.app",
+merchant_url: "https://lanzcihuyyy-apitermux.vercel.app"
 })
 }
 ]
@@ -26481,7 +27442,7 @@ let msg = generateWAMessageFromContent(
                   buttons: [
                     {
                       name: "cta_url",
-                      buttonParamsJson: `{"display_text":"WEBSITE PUTZZ STORE","url":"https://lanz0fficial-freeapi.vercel.app","merchant_url":"https://lanz0fficial-freeapi.vercel.app"}`
+                      buttonParamsJson: `{"display_text":"WEBSITE PUTZZ STORE","url":"https://lanzcihuyyy-apitermux.vercel.app","merchant_url":"https://lanzcihuyyy-apitermux.vercel.app"}`
                     },
                   ],
                 },
