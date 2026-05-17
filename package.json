@@ -1,7 +1,7 @@
 {
-  "name": "Lanzx Beta",
-  "version": "6.0.0",
-  "description": "WhatsApp Bot Lanzx VVIP",
+  "name": "Mikasa Bot",
+  "version": "7.0.0",
+  "description": "WhatsApp Bot Mikasa MD VVIP",
   "main": "start.js",
   "type": "commonjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "@google/generative-ai": "^0.24.0",
     "@hapi/boom": "^10.0.0",
     "@vreden/youtube_scraper": "*",
-    "@whiskeysockets/baileys": "github:LanzNotDev/baileys",
+    "@whiskeysockets/baileys": "npm:@zeppeliorg/wbails",
     "adm-zip": "^0.5.16",
     "archiver": "^7.0.1",
     "awesome-phonenumber": "^4.4.0",
